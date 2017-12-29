@@ -92,6 +92,7 @@ class TongYongService
     public function addUser($model)
     {
         $guzzle = new Client();
+
         $response = $guzzle->post($this->home . 'api/admin/user', [
             'form_params' => $model,
             'handler'=>$this->handler()
