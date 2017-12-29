@@ -8,13 +8,13 @@
         "laravel"
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=7.0.0",
         "illuminate/support": "5.*",
         "guzzlehttp/guzzle": "~6.0"
     },
     "authors": [
         {
-            "name": "yanjiaxu",
+            "name": "Yandaxu",
             "email": "836139146@qq.com"
         }
     ],
