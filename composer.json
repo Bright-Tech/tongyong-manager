@@ -1,0 +1,36 @@
+{
+    "name": "bright-tech/tongtong-manager",
+    "description": "通用用户SDK",
+    "type": "sdk",
+    "keywords": [
+        "sdk",
+        "php",
+        "laravel"
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "5.*",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "authors": [
+        {
+            "name": "yanjiaxu",
+            "email": "836139146@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "bright_tech\\laravel\\tongyong_manager\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "bright_tech\\laravel\\tongyong_manager\\TongYongServiceProvider"
+            ],
+            "aliases": {
+                "tongyong": "bright_tech\\laravel\\tongyong_manager\\TongYongServiceFacade"
+            }
+        }
+    }
+}
