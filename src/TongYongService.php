@@ -116,6 +116,14 @@ class TongYongService
         ]);
         return json_decode((string)$response->getBody(), true);
     }
+    public function deleteUser($id)
+    {
+        $guzzle = new Client();
+        $response = $guzzle->delete($this->home . 'api/admin/user/'.$id, [
+            'handler'=>$this->handler()
+        ]);
+        return json_decode((string)$response->getBody(), true);
+    }
     protected function handler(){
         return [
             'Accept'=>'application/json',
