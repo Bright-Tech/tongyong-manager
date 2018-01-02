@@ -61,30 +61,19 @@ class TongYongService
     protected function getToken()
     {
         if (!Cache::get('tongyong_access_token')) {
-            $url = $this->home . 'oauth/token';
-            $from_data = [
-                'grant_type' => $this->grant_type,
-                'client_id' => $this->client_id,
-                'client_secret' => $this->secret,
-                'scope' => $this->scope,
-            ];
-            $arr_token = $this->file_get_contents_post($url, $from_data);
+            $guzzle = new Client();
+            $response = $guzzle->post($this->home . 'oauth/token', [
+                'form_params' => [
+                    'grant_type' => $this->grant_type,
+                    'client_id' => $this->client_id,
+                    'client_secret' => $this->secret,
+                    'scope' => $this->scope,
+                ],
+            ]);
+            $arr_token = json_decode((string)$response->getBody(), true);
             Cache::put('tongyong_access_token', $arr_token->access_token, 1000);
         }
         return Cache::get('tongyong_access_token');
-    }
-
-    public function file_get_contents_post($url, $post)
-    {
-        $options = array(
-            'http' => array(
-                'method' => 'POST',
-                'header' => "Content-type: application/json",
-                'content' => json_encode($post, JSON_UNESCAPED_UNICODE),
-            ),
-        );
-        $result = \GuzzleHttp\json_decode(file_get_contents($url, false, stream_context_create($options)));
-        return $result;
     }
 
     public function getUserLogin($username, $password)
