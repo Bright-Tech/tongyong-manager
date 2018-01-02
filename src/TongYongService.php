@@ -95,7 +95,7 @@ class TongYongService
                 'password' => $password,
                 'username' => $username
             ],
-            'handler' => $this->handler()
+            'headers' => $this->headers()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
@@ -106,7 +106,7 @@ class TongYongService
 
         $response = $guzzle->post($this->home . 'api/admin/user', [
             'form_params' => $model,
-            'handler' => $this->handler()
+            'headers' => $this->headers()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
@@ -116,7 +116,7 @@ class TongYongService
         $guzzle = new Client();
         $response = $guzzle->put($this->home . 'api/admin/user/' . $model->id, [
             'form_params' => $model,
-            'handler' => $this->handler()
+            'headers' => $this->headers()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
@@ -125,7 +125,7 @@ class TongYongService
     {
         $guzzle = new Client();
         $response = $guzzle->get($this->home . 'api/admin/user/' . $id, [
-            'handler' => $this->handler()
+            'headers' => $this->headers()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
@@ -134,12 +134,12 @@ class TongYongService
     {
         $guzzle = new Client();
         $response = $guzzle->delete($this->home . 'api/admin/user/' . $id, [
-            'handler' => $this->handler()
+            'headers' => $this->headers()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
 
-    protected function handler()
+    protected function headers()
     {
         return [
             'Accept' => 'application/json',
