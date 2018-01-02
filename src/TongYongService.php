@@ -61,22 +61,33 @@ class TongYongService
     protected function getToken()
     {
         if (!Cache::get('tongyong_access_token')) {
-            $guzzle = new Client();
-            $response = $guzzle->post($this->home . 'oauth/token', [
-                'form_params' => [
-                    'grant_type' => $this->grant_type,
-                    'client_id' => $this->client_id,
-                    'client_secret' => $this->secret,
-                    'scope' => $this->scope,
-                ],
-            ]);
-            $arr_token = json_decode((string)$response->getBody(), true);
+            $url = $this->home . 'oauth/token';
+            $from_data = [
+                'grant_type' => $this->grant_type,
+                'client_id' => $this->client_id,
+                'client_secret' => $this->secret,
+                'scope' => $this->scope,
+            ];
+            $arr_token = $this->file_get_contents_post($url, $from_data);
             Cache::put('tongyong_access_token', $arr_token->access_token, 1000);
         }
         return Cache::get('tongyong_access_token');
     }
 
-    public function getUserLogin($username,$password)
+    public function file_get_contents_post($url, $post)
+    {
+        $options = array(
+            'http' => array(
+                'method' => 'POST',
+                'header' => "Content-type: application/json",
+                'content' => json_encode($post, JSON_UNESCAPED_UNICODE),
+            ),
+        );
+        $result = \GuzzleHttp\json_decode(file_get_contents($url, false, stream_context_create($options)));
+        return $result;
+    }
+
+    public function getUserLogin($username, $password)
     {
         $guzzle = new Client();
         $response = $guzzle->post($this->home . 'api/auth/login', [
@@ -84,7 +95,7 @@ class TongYongService
                 'password' => $password,
                 'username' => $username
             ],
-            'handler'=>$this->handler()
+            'handler' => $this->handler()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
@@ -95,40 +106,45 @@ class TongYongService
 
         $response = $guzzle->post($this->home . 'api/admin/user', [
             'form_params' => $model,
-            'handler'=>$this->handler()
+            'handler' => $this->handler()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
+
     public function updateUser($model)
     {
         $guzzle = new Client();
-        $response = $guzzle->put($this->home . 'api/admin/user/'.$model->id, [
+        $response = $guzzle->put($this->home . 'api/admin/user/' . $model->id, [
             'form_params' => $model,
-            'handler'=>$this->handler()
+            'handler' => $this->handler()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
+
     public function getUser($id)
     {
         $guzzle = new Client();
-        $response = $guzzle->get($this->home . 'api/admin/user/'.$id, [
-            'handler'=>$this->handler()
+        $response = $guzzle->get($this->home . 'api/admin/user/' . $id, [
+            'handler' => $this->handler()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
+
     public function deleteUser($id)
     {
         $guzzle = new Client();
-        $response = $guzzle->delete($this->home . 'api/admin/user/'.$id, [
-            'handler'=>$this->handler()
+        $response = $guzzle->delete($this->home . 'api/admin/user/' . $id, [
+            'handler' => $this->handler()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
-    protected function handler(){
+
+    protected function handler()
+    {
         return [
-            'Accept'=>'application/json',
-            'Content-Type'=>'application/',
-            'Authorization'=>'Bearer '.$this->getToken()
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/',
+            'Authorization' => 'Bearer ' . $this->getToken()
         ];
     }
 }
