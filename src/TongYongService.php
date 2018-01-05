@@ -79,7 +79,7 @@ class TongYongService
     public function getUserLogin($username, $password)
     {
         $guzzle = new Client();
-        $response = $guzzle->post($this->home . 'api/auth/login', [
+        $response = $guzzle->post($this->home . 'api/user/login', [
             'form_params' => [
                 'password' => $password,
                 'username' => $username
@@ -93,7 +93,7 @@ class TongYongService
     {
         $guzzle = new Client();
 
-        $response = $guzzle->post($this->home . 'api/admin/user', [
+        $response = $guzzle->post($this->home . 'api/user', [
             'form_params' => $model,
             'headers' => $this->headers()
         ]);
@@ -103,7 +103,7 @@ class TongYongService
     public function updateUser($model)
     {
         $guzzle = new Client();
-        $response = $guzzle->put($this->home . 'api/admin/user/' . $model->id, [
+        $response = $guzzle->put($this->home . 'api/user/' . $model->id, [
             'form_params' => $model,
             'headers' => $this->headers()
         ]);
@@ -113,7 +113,7 @@ class TongYongService
     public function getUser($id)
     {
         $guzzle = new Client();
-        $response = $guzzle->get($this->home . 'api/admin/user/' . $id, [
+        $response = $guzzle->get($this->home . 'api/user/' . $id, [
             'headers' => $this->headers()
         ]);
         return json_decode((string)$response->getBody(), true);
@@ -122,7 +122,7 @@ class TongYongService
     public function deleteUser($id)
     {
         $guzzle = new Client();
-        $response = $guzzle->delete($this->home . 'api/admin/user/' . $id, [
+        $response = $guzzle->delete($this->home . 'api/user/' . $id, [
             'headers' => $this->headers()
         ]);
         return json_decode((string)$response->getBody(), true);
