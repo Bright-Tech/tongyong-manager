@@ -62,7 +62,7 @@ class TongYongService
     {
         if (!Cache::get('tongyong_access_token')) {
             $guzzle = new Client();
-            $response = $guzzle->post($this->home . 'oauth/token', [
+            $response = $guzzle->request('POST', $this->home . 'oauth/token', [
                 'form_params' => [
                     'grant_type' => $this->grant_type,
                     'client_id' => $this->client_id,
@@ -71,7 +71,7 @@ class TongYongService
                 ],
             ]);
             $arr_token = json_decode((string)$response->getBody(), true);
-            Cache::put('tongyong_access_token', $arr_token->access_token, 1000);
+            Cache::put('tongyong_access_token', $arr_token['access_token'], 1000);
         }
         return Cache::get('tongyong_access_token');
     }
@@ -79,12 +79,12 @@ class TongYongService
     public function getUserLogin($username, $password)
     {
         $guzzle = new Client();
-        $response = $guzzle->post($this->home . 'api/user/login', [
+        $response = $guzzle->request('POST', $this->home . 'api/user/login', [
             'form_params' => [
                 'password' => $password,
                 'username' => $username
             ],
-            'headers' => $this->headers()
+            'header' => $this->header()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
@@ -93,9 +93,9 @@ class TongYongService
     {
         $guzzle = new Client();
 
-        $response = $guzzle->post($this->home . 'api/user', [
+        $response = $guzzle->request('POST', $this->home . 'api/user', [
             'form_params' => $model,
-            'headers' => $this->headers()
+            'header' => $this->header()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
@@ -103,9 +103,9 @@ class TongYongService
     public function updateUser($model)
     {
         $guzzle = new Client();
-        $response = $guzzle->put($this->home . 'api/user/' . $model->id, [
+        $response = $guzzle->request('PUT', $this->home . 'api/user/' . $model->id, [
             'form_params' => $model,
-            'headers' => $this->headers()
+            'header' => $this->header()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
@@ -113,26 +113,25 @@ class TongYongService
     public function getUser($id)
     {
         $guzzle = new Client();
-        $response = $guzzle->get($this->home . 'api/user/' . $id, [
-            'headers' => $this->headers()
+        // dd($this->home.'api/user/'. $id);
+        $response = $guzzle->request('GET', $this->home . 'api/user/' . $id, [
+            'headers' => $this->header()
         ]);
-        return json_decode((string)$response->getBody(), true);
+        return json_decode((string)$response->getBody(true), true);
     }
 
     public function deleteUser($id)
     {
         $guzzle = new Client();
-        $response = $guzzle->delete($this->home . 'api/user/' . $id, [
-            'headers' => $this->headers()
+        $response = $guzzle->request('DELETE', $this->home . 'api/user/' . $id, [
+            'header' => $this->header()
         ]);
         return json_decode((string)$response->getBody(), true);
     }
 
-    protected function headers()
+    protected function header()
     {
         return [
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/',
             'Authorization' => 'Bearer ' . $this->getToken()
         ];
     }
