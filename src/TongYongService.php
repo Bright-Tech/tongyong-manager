@@ -88,14 +88,11 @@ class TongYongService
                 ],
                 'headers' => $this->header()
             ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
         } catch (RequestException $e) {
-            echo $e->getRequest();
-            if ($e->hasResponse()) {
-                echo $e->getResponse();
-            }
+            return $this->RequestResult(false, $e->getMessage());
         }
-
-        return json_decode((string)$response->getBody(), true);
     }
 
     /**
@@ -110,14 +107,19 @@ class TongYongService
                 'form_params' => $model,
                 'headers' => $this->header()
             ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
         } catch (RequestException $e) {
-            echo $e->getRequest();
-            if ($e->hasResponse()) {
-                echo $e->getResponse();
-            }
+            return $this->RequestResult(false, $e->getMessage());
         }
+    }
 
-        return json_decode((string)$response->getBody(), true);
+    private function RequestResult($success, $data)
+    {
+        return [
+            'success' => $success,
+            'data' => $data
+        ];
     }
 
     public function updateUser($model)
@@ -128,14 +130,11 @@ class TongYongService
                 'form_params' => $model,
                 'headers' => $this->header()
             ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
         } catch (RequestException $e) {
-            echo $e->getRequest();
-            if ($e->hasResponse()) {
-                echo $e->getResponse();
-            }
+            return $this->RequestResult(false, $e->getMessage());
         }
-
-        return json_decode((string)$response->getBody(), true);
     }
 
     public function getUser($id)
@@ -146,14 +145,11 @@ class TongYongService
             $response = $guzzle->request('GET', $this->home . 'api/user/' . $id, [
                 'headers' => $this->header()
             ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
         } catch (RequestException $e) {
-            echo $e->getRequest();
-            if ($e->hasResponse()) {
-                echo $e->getResponse();
-            }
+            return $this->RequestResult(false, $e->getMessage());
         }
-
-        return json_decode((string)$response->getBody(), true);
     }
 
     public function deleteUser($id)
@@ -164,14 +160,11 @@ class TongYongService
             $response = $guzzle->request('DELETE', $this->home . 'api/user/' . $id, [
                 'headers' => $this->header()
             ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
         } catch (RequestException $e) {
-            echo $e->getRequest();
-            if ($e->hasResponse()) {
-                echo $e->getResponse();
-            }
+            return $this->RequestResult(false, $e->getMessage());
         }
-
-        return json_decode((string)$response->getBody(), true);
     }
 
     public function resetUserPassword($model)
@@ -182,19 +175,17 @@ class TongYongService
                 'form_params' => $model,
                 'headers' => $this->header()
             ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
         } catch (RequestException $e) {
-            echo $e->getRequest();
-            if ($e->hasResponse()) {
-                echo $e->getResponse();
-            }
+            return $this->RequestResult(false, $e->getMessage());
         }
-        return json_decode((string)$response->getBody(), true);
     }
 
     protected function header()
     {
         return [
-            'Authorization' => 'Bearer ' . $this->getToken()
+            'Authorization' => 'Bearer ' . $this->getToken(), 'Accept' => 'application/json'
         ];
     }
 
@@ -210,14 +201,11 @@ class TongYongService
                 ],
                 'headers' => $this->header()
             ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
         } catch (RequestException $e) {
-            echo $e->getRequest();
-            if ($e->hasResponse()) {
-                echo $e->getResponse();
-            }
+            return $this->RequestResult(false, $e->getMessage());
         }
-
-        return json_decode((string)$response->getBody(), true);
     }
 
     public function addAdmin($model)
@@ -228,13 +216,11 @@ class TongYongService
                 'form_params' => $model,
                 'headers' => $this->header()
             ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
         } catch (RequestException $e) {
-            echo $e->getRequest();
-            if ($e->hasResponse()) {
-                echo $e->getResponse();
-            }
+            return $this->RequestResult(false, $e->getMessage());
         }
-        return json_decode((string)$response->getBody(), true);
     }
 
     public function updateAdmin($model)
@@ -245,14 +231,11 @@ class TongYongService
                 'form_params' => $model,
                 'headers' => $this->header()
             ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
         } catch (RequestException $e) {
-            echo $e->getRequest();
-            if ($e->hasResponse()) {
-                echo $e->getResponse();
-            }
+            return $this->RequestResult(false, $e->getMessage());
         }
-
-        return json_decode((string)$response->getBody(), true);
     }
 
     public function getAdmin($id)
@@ -262,14 +245,11 @@ class TongYongService
             $response = $guzzle->request('GET', $this->home . 'api/admin/' . $id, [
                 'headers' => $this->header()
             ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
         } catch (RequestException $e) {
-            echo $e->getRequest();
-            if ($e->hasResponse()) {
-                echo $e->getResponse();
-            }
+            return $this->RequestResult(false, $e->getMessage());
         }
-
-        return json_decode((string)$response->getBody(), true);
     }
 
     public function deleteAdmin($id)
@@ -279,32 +259,26 @@ class TongYongService
             $response = $guzzle->request('DELETE', $this->home . 'api/admin/' . $id, [
                 'headers' => $this->header()
             ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
         } catch (RequestException $e) {
-            echo $e->getRequest();
-            if ($e->hasResponse()) {
-                echo $e->getResponse();
-            }
+            return $this->RequestResult(false, $e->getMessage());
         }
-        return json_decode((string)$response->getBody(), true);
     }
 
     public function resetAdminPassword($model)
     {
         $guzzle = new Client();
-
         try {
             $response = $guzzle->request('POST', $this->home . 'api/admin/reset-password/' . $model['id'], [
                 'form_params' => $model,
                 'headers' => $this->header()
             ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
         } catch (RequestException $e) {
-            echo $e->getRequest();
-            if ($e->hasResponse()) {
-                echo $e->getResponse();
-            }
+            return $this->RequestResult(false, $e->getMessage());
         }
-
-        return json_decode((string)$response->getBody(), true);
     }
 
     /**
@@ -316,15 +290,13 @@ class TongYongService
     {
         $guzzle = new Client();
         try {
-            $response = $guzzle->request('GET', $this->home . 'api/admin/code-login/'.$code.'/'.$this->client_id, [
+            $response = $guzzle->request('GET', $this->home . 'api/admin/code-login/' . $code . '/' . $this->client_id, [
                 'headers' => $this->header()
             ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
         } catch (RequestException $e) {
-            echo $e->getRequest();
-            if ($e->hasResponse()) {
-                echo $e->getResponse();
-            }
+            return $this->RequestResult(false, $e->getMessage());
         }
-        return json_decode((string)$response->getBody(), true);
     }
 }
