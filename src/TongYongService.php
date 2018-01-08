@@ -102,7 +102,7 @@ class TongYongService
     public function updateUser($model)
     {
         $guzzle = new Client();
-        $response = $guzzle->request('PUT',  $this->home . 'api/user/' . $model['id'], [
+        $response = $guzzle->request('PUT', $this->home . 'api/user/' . $model['id'], [
             'form_params' => $model,
             'headers' => $this->header()
         ]);
@@ -127,10 +127,81 @@ class TongYongService
         return json_decode((string)$response->getBody(), true);
     }
 
+    public function resetUserPassword($model)
+    {
+        $guzzle = new Client();
+        $response = $guzzle->request('POST', $this->home . 'api/user/reset-password/' . $model['id'], [
+            'form_params' => $model,
+            'headers' => $this->header()
+        ]);
+        return json_decode((string)$response->getBody(), true);
+    }
+
     protected function header()
     {
         return [
             'Authorization' => 'Bearer ' . $this->getToken()
         ];
+    }
+
+    public function getAdminLogin($username, $password)
+    {
+        $guzzle = new Client();
+        $response = $guzzle->request('POST', $this->home . 'api/admin/login', [
+            'form_params' => [
+                'password' => $password,
+                'username' => $username
+            ],
+            'headers' => $this->header()
+        ]);
+        return json_decode((string)$response->getBody(), true);
+    }
+
+    public function addAdmin($model)
+    {
+        $guzzle = new Client();
+        $response = $guzzle->request('POST', $this->home . 'api/admin', [
+            'form_params' => $model,
+            'headers' => $this->header()
+        ]);
+        return json_decode((string)$response->getBody(), true);
+    }
+
+    public function updateAdmin($model)
+    {
+        $guzzle = new Client();
+        $response = $guzzle->request('PUT', $this->home . 'api/admin/' . $model['id'], [
+            'form_params' => $model,
+            'headers' => $this->header()
+        ]);
+        return json_decode((string)$response->getBody(), true);
+    }
+
+    public function getAdmin($id)
+    {
+        $guzzle = new Client();
+        $response = $guzzle->request('GET', $this->home . 'api/admin/' . $id, [
+            'headers' => $this->header()
+        ]);
+        return json_decode((string)$response->getBody(), true);
+    }
+
+    public function deleteAdmin($id)
+    {
+        $guzzle = new Client();
+        $response = $guzzle->request('DELETE', $this->home . 'api/admin/' . $id, [
+            'headers' => $this->header()
+        ]);
+        return json_decode((string)$response->getBody(), true);
+    }
+
+    public function resetAdminPassword($model)
+    {
+        $guzzle = new Client();
+        $response = $guzzle->request('POST', $this->home . 'api/admin/reset-password/' . $model['id'], [
+            'form_params' => $model,
+            'headers' => $this->header()
+        ]);
+        return json_decode((string)$response->getBody(), true);
     }
 }
