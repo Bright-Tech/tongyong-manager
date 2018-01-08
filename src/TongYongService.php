@@ -303,7 +303,28 @@ class TongYongService
                 echo $e->getResponse();
             }
         }
-        
+
+        return json_decode((string)$response->getBody(), true);
+    }
+
+    /**
+     * 使用code认证用户
+     * @param $code
+     * @return mixed
+     */
+    public function codeLogin($code)
+    {
+        $guzzle = new Client();
+        try {
+            $response = $guzzle->request('GET', $this->home . 'api/admin/code-login/'.$code.'/'.$this->client_id, [
+                'headers' => $this->header()
+            ]);
+        } catch (RequestException $e) {
+            echo $e->getRequest();
+            if ($e->hasResponse()) {
+                echo $e->getResponse();
+            }
+        }
         return json_decode((string)$response->getBody(), true);
     }
 }
