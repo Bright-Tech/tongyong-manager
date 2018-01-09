@@ -290,7 +290,7 @@ class TongYongService
     {
         $guzzle = new Client();
         try {
-            $response = $guzzle->request('GET', $this->home . 'api/admin/code-login/' . $code . '/' . $this->client_id, [
+            $response = $guzzle->request('GET', $this->home . 'api/user/code-login/' . $code . '/' . $this->client_id, [
                 'headers' => $this->header()
             ]);
             $data = json_decode((string)$response->getBody(), true);
