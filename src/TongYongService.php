@@ -122,11 +122,11 @@ class TongYongService
         ];
     }
 
-    public function updateUser($model)
+    public function updateUser($model,$id)
     {
         $guzzle = new Client();
         try {
-            $response = $guzzle->request('PUT', $this->home . 'api/user/' . $model['id'], [
+            $response = $guzzle->request('PUT', $this->home . 'api/user/' . $id, [
                 'form_params' => $model,
                 'headers' => $this->header()
             ]);
@@ -167,11 +167,11 @@ class TongYongService
         }
     }
 
-    public function resetUserPassword($model)
+    public function resetUserPassword($model,$id)
     {
         try {
             $guzzle = new Client();
-            $response = $guzzle->request('POST', $this->home . 'api/user/reset-password/' . $model['id'], [
+            $response = $guzzle->request('POST', $this->home . 'api/user/reset-password/' . $id, [
                 'form_params' => $model,
                 'headers' => $this->header()
             ]);
@@ -223,11 +223,11 @@ class TongYongService
         }
     }
 
-    public function updateAdmin($model)
+    public function updateAdmin($model,$id)
     {
         $guzzle = new Client();
         try {
-            $response = $guzzle->request('PUT', $this->home . 'api/admin/' . $model['id'], [
+            $response = $guzzle->request('PUT', $this->home . 'api/admin/' . $id, [
                 'form_params' => $model,
                 'headers' => $this->header()
             ]);
@@ -266,11 +266,11 @@ class TongYongService
         }
     }
 
-    public function resetAdminPassword($model)
+    public function resetAdminPassword($model,$id)
     {
         $guzzle = new Client();
         try {
-            $response = $guzzle->request('POST', $this->home . 'api/admin/reset-password/' . $model['id'], [
+            $response = $guzzle->request('POST', $this->home . 'api/admin/reset-password/' . $id, [
                 'form_params' => $model,
                 'headers' => $this->header()
             ]);
