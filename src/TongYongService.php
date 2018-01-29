@@ -299,4 +299,27 @@ class TongYongService
             return $this->RequestResult(false, $e->getMessage());
         }
     }
+
+    /**
+     * @param $union_id 微信Unionid
+     * @return array
+     */
+    public function getUserByUnionid($union_id)
+    {
+        $guzzle = new Client();
+        try {
+            $response = $guzzle->request('POST', $this->home . 'api/user/get-user-by-unionid', [
+                'form_params' => [
+                    'union_id'=>$union_id
+                ],
+                'headers' => $this->header()
+            ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
+        } catch (RequestException $e) {
+            return $this->RequestResult(false, $e->getMessage());
+        }
+    }
+
+
 }
