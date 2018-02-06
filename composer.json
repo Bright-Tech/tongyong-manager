@@ -9,8 +9,8 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "illuminate/support": "5.*",
-        "guzzlehttp/guzzle": "~6.0"
+        "illuminate/support": "^5.5",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "authors": [
         {
@@ -31,6 +31,12 @@
             "aliases": {
                 "tongyong": "bright_tech\\laravel\\tongyong_manager\\TongYongServiceFacade"
             }
+        }
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
         }
     }
 }
