@@ -59,6 +59,9 @@ class TongYongService
         $this->scope = $scope;
     }
 
+    /**token获取
+     * @return mixed
+     */
     protected function getToken()
     {
         if (!Cache::get('tongyong_access_token')) {
@@ -77,6 +80,11 @@ class TongYongService
         return Cache::get('tongyong_access_token');
     }
 
+    /**用户登录验证
+     * @param $username
+     * @param $password
+     * @return array
+     */
     public function getUserLogin($username, $password)
     {
         $guzzle = new Client();
@@ -96,6 +104,7 @@ class TongYongService
     }
 
     /**
+     * 添加用户
      * @param array $model
      * @return mixed
      */
@@ -113,7 +122,23 @@ class TongYongService
             return $this->RequestResult(false, $e->getMessage());
         }
     }
+    /**
+     * 公用头部
+     * @return array
+     */
+    protected function header()
+    {
+        return [
+            'Authorization' => 'Bearer ' . $this->getToken(), 'Accept' => 'application/json'
+        ];
+    }
 
+    /**
+     * 统一返回格式
+     * @param $success
+     * @param $data
+     * @return array
+     */
     private function RequestResult($success, $data)
     {
         return [
@@ -122,6 +147,12 @@ class TongYongService
         ];
     }
 
+    /**
+     * 修改用户
+     * @param $model
+     * @param $id
+     * @return array
+     */
     public function updateUser($model,$id)
     {
         $guzzle = new Client();
@@ -137,6 +168,11 @@ class TongYongService
         }
     }
 
+    /**
+     * 获取用户
+     * @param $id
+     * @return array
+     */
     public function getUser($id)
     {
         $guzzle = new Client();
@@ -152,6 +188,10 @@ class TongYongService
         }
     }
 
+    /**删除用户
+     * @param $id
+     * @return array
+     */
     public function deleteUser($id)
     {
         $guzzle = new Client();
@@ -167,6 +207,12 @@ class TongYongService
         }
     }
 
+    /**
+     * 重置用户密码
+     * @param $model
+     * @param $id
+     * @return array
+     */
     public function resetUserPassword($model,$id)
     {
         try {
@@ -182,13 +228,12 @@ class TongYongService
         }
     }
 
-    protected function header()
-    {
-        return [
-            'Authorization' => 'Bearer ' . $this->getToken(), 'Accept' => 'application/json'
-        ];
-    }
-
+    /**
+     * 后台用户登录
+     * @param $username
+     * @param $password
+     * @return array
+     */
     public function getAdminLogin($username, $password)
     {
         $guzzle = new Client();
@@ -208,6 +253,11 @@ class TongYongService
         }
     }
 
+    /**
+     * 添加后台用户
+     * @param $model
+     * @return array
+     */
     public function addAdmin($model)
     {
         $guzzle = new Client();
@@ -223,6 +273,12 @@ class TongYongService
         }
     }
 
+    /**
+     * 修改后台用户信息
+     * @param $model
+     * @param $id
+     * @return array
+     */
     public function updateAdmin($model,$id)
     {
         $guzzle = new Client();
@@ -238,6 +294,11 @@ class TongYongService
         }
     }
 
+    /**
+     * 获取后台用户信息
+     * @param $id
+     * @return array
+     */
     public function getAdmin($id)
     {
         $guzzle = new Client();
@@ -252,6 +313,11 @@ class TongYongService
         }
     }
 
+    /**
+     * 删除后台用户
+     * @param $id
+     * @return array
+     */
     public function deleteAdmin($id)
     {
         $guzzle = new Client();
@@ -266,6 +332,12 @@ class TongYongService
         }
     }
 
+    /**
+     * 重置后台用户密码
+     * @param $model
+     * @param $id
+     * @return array
+     */
     public function resetAdminPassword($model,$id)
     {
         $guzzle = new Client();
@@ -320,6 +392,30 @@ class TongYongService
             return $this->RequestResult(false, $e->getMessage());
         }
     }
+
+    /**
+     * @param $union_id 微信Unionid
+     * @return array
+     */
+    public function getUserByMobile($mobile)
+    {
+        $guzzle = new Client();
+        try {
+            $response = $guzzle->request('POST', $this->home . 'api/user/get-user-by-mobile', [
+                'form_params' => [
+                    'mobile'=>$mobile
+                ],
+                'headers' => $this->header()
+            ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $this->RequestResult(true, $data);
+        } catch (RequestException $e) {
+            return $this->RequestResult(false, $e->getMessage());
+        }
+    }
+
+
+
 
 
 }
