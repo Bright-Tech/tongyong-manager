@@ -211,4 +211,30 @@ class Support
 //    }
 
 
+    /**
+     *
+     */
+
+    /**
+     * @param $mobile
+     * @return core\Response
+     */
+    public function sendSmsConfirmationCode($mobile)
+    {
+        return $this->request->requestPost($this->domain . '/api/sms/send-confirmation-code', [
+            'form_params' => ['phone-number' => $mobile]
+        ]);
+    }
+
+    /**
+     * @param $mobile
+     * @param $code
+     * @return core\Response
+     */
+    public function checkSmsConfirmationCode($mobile, $code)
+    {
+        return $this->request->requestPost($this->domain . '/api/sms/check-confirmation-code', [
+            'form_params' => ['phone-number' => $mobile, 'code' => $code]
+        ]);
+    }
 }
