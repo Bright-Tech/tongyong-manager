@@ -27,7 +27,8 @@ class Response
     public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
-        $this->body = json_decode($this->response->getBody(), true);
+        $body = json_decode($this->response->getBody(), true);
+        $this->body = $body;
     }
 
     public function getBody()
@@ -36,11 +37,16 @@ class Response
     }
 
 
+    public function getStatus()
+    {
+        return $this->response->getStatusCode();
+    }
+
     public function __get($name)
     {
         // TODO: Implement __get() method.
         $method = 'get' . ucfirst($name);
-        return $this->$method;
+        return $this->$method();
     }
 
 }

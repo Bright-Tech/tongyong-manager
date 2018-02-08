@@ -92,7 +92,7 @@ class Request
     public function getToken()
     {
 
-        if (!Cache::get('support_access_token')) {
+        if (!\Cache::get('support_access_token')) {
             $sender = $this->getSender();
             $response = $sender->request('POST', $this->domain . '/oauth/token', [
                 'form_params' => [
@@ -102,10 +102,10 @@ class Request
                     'scope' => $this->scope,
                 ],
             ]);
-            $response = json_decode($response);
-            Cache::put('support_access_token', $response->access_token, $response->expires_in);
+            $response = json_decode($response->getBody());
+            \Cache::put('support_access_token', $response->access_token, $response->expires_in);
         }
-        return Cache::get('support_access_token');
+        return \Cache::get('support_access_token');
     }
 
     /**
