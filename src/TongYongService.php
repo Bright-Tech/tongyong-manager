@@ -394,7 +394,8 @@ class TongYongService
     }
 
     /**
-     * @param $union_id 微信Unionid
+     * 根据手机号获取用户
+     * @param $union_id
      * @return array
      */
     public function getUserByMobile($mobile)
@@ -404,6 +405,29 @@ class TongYongService
             $response = $guzzle->request('POST', $this->home . 'api/user/get-user-by-mobile', [
                 'form_params' => [
                     'mobile'=>$mobile
+                ],
+                'headers' => $this->header()
+            ]);
+            $data = json_decode((string)$response->getBody(), true);
+            return $data;
+        } catch (RequestException $e) {
+            return $this->RequestResult(false, $e->getMessage());
+        }
+    }
+
+    /**
+     * 短信验证
+     * @param $mobile
+     * @param $code
+     * @return array
+     */
+    public function checkSMS($mobile,$code){
+        $guzzle = new Client();
+        try {
+            $response = $guzzle->request('POST', $this->home . 'api/admin/sms/check-confirmation-code', [
+                'form_params' => [
+                    'phone-number'=>$mobile,
+                    'code'=>$code
                 ],
                 'headers' => $this->header()
             ]);
