@@ -140,10 +140,15 @@ class Request
      */
     public function request($method, $url, array $options = [])
     {
-        $sender = $this->getSender();
-        $options = array_merge($options, ['headers' => $this->getHeaders()]);
-        $response = $sender->request($method, $url, $options);
-        return new Response($response);
+        try {
+            $sender = $this->getSender();
+            $options = array_merge($options, ['headers' => $this->getHeaders()]);
+            $response = $sender->request($method, $url, $options);
+            return new Response($response);
+        } catch (RequestException $e) {
+            return new Response($e->getResponse(), false);
+        }
+
     }
 
 
