@@ -39,6 +39,7 @@ class Support
     }
 
     /**
+     * 普通用户登录
      * @param $username
      * @param $password
      * @return core\Response
@@ -54,6 +55,7 @@ class Support
     }
 
     /**
+     * 添加普通用户
      * @param array $model
      * @return mixed
      */
@@ -65,6 +67,7 @@ class Support
     }
 
     /**
+     * 修改普通用户信息
      * @param array $model
      * @param $id
      * @return core\Response
@@ -77,6 +80,7 @@ class Support
     }
 
     /**
+     * 根据条件查找普通用户
      * @param $field
      * @param $value
      * @return core\Response
@@ -87,6 +91,7 @@ class Support
     }
 
     /**
+     * 根据ID查找普通用户
      * @param $id
      * @return core\Response
      */
@@ -96,6 +101,7 @@ class Support
     }
 
     /**
+     * 删除普通用户
      * @param $id
      * @return core\Response
      */
@@ -118,7 +124,12 @@ class Support
 //            return $this->RequestResult(false, $e->getMessage());
 //        }
 //    }
-
+    /**
+     * 登录后台用户
+     * @param $username
+     * @param $password
+     * @return core\Response
+     */
     public function authAdmin($username, $password)
     {
         return $this->request->requestPost($this->domain . '/api/admin/login', [
@@ -129,6 +140,11 @@ class Support
         ]);
     }
 
+    /**
+     * 添加后台用户
+     * @param array $model
+     * @return core\Response
+     */
     public function addAdmin(array $model)
     {
         return $this->request->requestPost($this->domain . '/api/admin', [
@@ -136,6 +152,12 @@ class Support
         ]);
     }
 
+    /**
+     * 修改后台用户
+     * @param $model
+     * @param $id
+     * @return core\Response
+     */
     public function updateAdmin($model, $id)
     {
         return $this->request->request('PUT', $this->domain . "/api/admin/{$id}", [
@@ -143,10 +165,21 @@ class Support
         ]);
     }
 
+    /**
+     * ID获取后台用户
+     * @param $id
+     * @return core\Response
+     */
     public function getAdminById($id)
     {
         return $this->request->requestGet($this->domain . "/api/admin/{$id}");
     }
+
+    /**
+     * 删除后台用户
+     * @param $id
+     * @return core\Response
+     */
 
     public function deleteAdmin($id)
     {
@@ -209,10 +242,7 @@ class Support
 
 
     /**
-     *
-     */
-
-    /**
+     * 发送手机验证码
      * @param $mobile
      * @return core\Response
      */
@@ -224,6 +254,7 @@ class Support
     }
 
     /**
+     * 验证手机号，code
      * @param $mobile
      * @param $code
      * @return core\Response
