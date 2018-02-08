@@ -1,5 +1,5 @@
 {
-    "name": "bright-tech/tongyong_manager",
+    "name": "bright-tech/support-sdk",
     "description": "通用用户SDK",
     "type": "sdk",
     "keywords": [
@@ -20,17 +20,14 @@
     ],
     "autoload": {
         "psr-4": {
-            "bright_tech\\laravel\\tongyong_manager\\": "src/"
+            "bright\\support\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "bright_tech\\laravel\\tongyong_manager\\TongYongServiceProvider"
-            ],
-            "aliases": {
-                "tongyong": "bright_tech\\laravel\\tongyong_manager\\TongYongServiceFacade"
-            }
+                "bright\\support\\SupportProvider"
+            ]
         }
     },
     "repositories": {

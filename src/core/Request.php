@@ -115,7 +115,7 @@ class Request
      *
      * @return Response
      */
-    public function requestGet($url, $options)
+    public function requestGet($url, $options = [])
     {
         return $this->request('GET', $url, $options);
     }
@@ -127,7 +127,7 @@ class Request
      *
      * @return Response
      */
-    public function requestPost($url, array $options)
+    public function requestPost($url, array $options = [])
     {
         return $this->request('POST', $url, $options);
     }
@@ -138,7 +138,7 @@ class Request
      * @param array $options
      * @return Response
      */
-    public function request($method, $url, array $options)
+    public function request($method, $url, array $options = [])
     {
         $sender = $this->getSender();
         $options = array_merge($options, ['headers' => $this->getHeaders()]);

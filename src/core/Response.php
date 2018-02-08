@@ -12,11 +12,17 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Class Response
+ *
+ * @property-read $body
+ * @property-read $status
+ *
+ * @package bright\support\core
+ */
 class Response
 {
     protected $response;
-
-    public $body;
 
     public function __construct(ResponseInterface $response)
     {
@@ -29,5 +35,12 @@ class Response
         return json_decode($this->response->getBody(), true);
     }
 
+
+    public function __get($name)
+    {
+        // TODO: Implement __get() method.
+        $method = 'get' . ucfirst($name);
+        return $this->$method;
+    }
 
 }
