@@ -174,6 +174,16 @@ class Support
     {
         return $this->request->requestGet($this->domain . "/api/admin/{$id}");
     }
+    /**
+     * 根据条件查找后台用户
+     * @param $field
+     * @param $value
+     * @return core\Response
+     */
+    public function searchAdmin($field, $value)
+    {
+        return $this->request->requestGet($this->domain . "/api/admin/search/{$field}/{$value}");
+    }
 
     /**
      * 删除后台用户
@@ -254,7 +264,7 @@ class Support
     }
 
     /**
-     * 验证手机号，code
+     * 验证手机号，codeF
      * @param $mobile
      * @param $code
      * @return core\Response
