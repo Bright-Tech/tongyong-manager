@@ -101,13 +101,34 @@ class Support
     }
 
     /**
-     * 删除普通用户
+     * 软删除普通用户
      * @param $id
      * @return core\Response
      */
     public function deleteUser($id)
     {
         return $this->request->request('DELETE', $this->domain . '/api/user/' . $id);
+    }
+
+    /**
+     * 彻底删除普通用户
+     * @param $id
+     * @return core\Response
+     */
+    public function forceDeleteUser($id)
+    {
+
+        return $this->request->requestGet($this->domain . '/api/user/user-force-delete/' . $id);
+    }
+
+    /**
+     * 重新启用该用户
+     * @param $id
+     * @return core\Response
+     */
+    public function enableUser($id)
+    {
+        return $this->request->requestGet( $this->domain . '/api/user/enable-user/' . $id);
     }
 
 //    public function resetUserPassword($model, $id)
@@ -174,6 +195,7 @@ class Support
     {
         return $this->request->requestGet($this->domain . "/api/admin/{$id}");
     }
+
     /**
      * 根据条件查找后台用户
      * @param $field
