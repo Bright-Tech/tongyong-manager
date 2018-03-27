@@ -118,7 +118,7 @@ class Support
     public function forceDeleteUser($id)
     {
 
-        return $this->request->requestGet($this->domain . '/api/user/user-force-delete/' . $id);
+        return $this->request->request('DELETE',$this->domain . '/api/user/user-force-delete/' . $id);
     }
 
     /**
