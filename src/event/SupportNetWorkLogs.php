@@ -42,6 +42,7 @@ class SupportNetWorkLogs
         $this->desc = $desc;
         $this->type = $type;
         $this->url = $url;
+        $this->param = $param;
         //
     }
 }
