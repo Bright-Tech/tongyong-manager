@@ -8,6 +8,7 @@
 
 namespace bright\support\core;
 
+use bright\support\event\SupportNetWorkLogs;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Cache;
@@ -144,9 +145,13 @@ class Request
             $sender = $this->getSender();
             $options = array_merge($options, ['headers' => $this->getHeaders()]);
             $response = $sender->request($method, $url, $options);
-            return new Response($response);
+            $successResult = new Response($response);
+            event(new SupportNetWorkLogs($successResult,'support-sdk',$method,$url,$options));
+            return $successResult;
         } catch (RequestException $e) {
-            return new Response($e->getResponse(), false);
+            $errorResult = new Response($e->getResponse(), false);
+            event(new SupportNetWorkLogs($errorResult,'support-sdk',$method,$url,$options));
+            return $errorResult;
         }
 
     }
